@@ -1,0 +1,5 @@
+[api]
+port = 8080
+internalPort = 8090
+timeoutSec = 2
+shutDownTimeoutSec = 5

@@ -8,10 +8,6 @@ import (
 	"sideEcho/dto"
 )
 
-func hello(c *customContext) error {
-	return c.String(http.StatusOK, "hello")
-}
-
 func buy(c *customContext) error {
 	req := new(dto.SellRequest)
 	if err := c.Bind(req); err != nil {

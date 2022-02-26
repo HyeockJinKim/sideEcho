@@ -3,11 +3,10 @@ package v1
 import (
 	"net/http"
 
-	"sideEcho/exchange"
-
-	"sideEcho/stats"
-
 	"github.com/labstack/echo/v4"
+
+	"sideEcho/exchange"
+	"sideEcho/stats"
 )
 
 type customContext struct {
@@ -20,8 +19,8 @@ func Route(e *echo.Group) {
 	serverStats := stats.NewStats()
 	exchangeManager := exchange.NewManager()
 	e.Use(wrapContextMiddleware(exchangeManager, serverStats))
-	e.GET("/buy", customContextWrapper(buy))
-	e.GET("/sell", customContextWrapper(sell))
+	e.GET("/buy", customContextWrapper(requestStatMiddleware(buy)))
+	e.GET("/sell", customContextWrapper(requestStatMiddleware(sell)))
 }
 
 func wrapContextMiddleware(manager exchange.Manager, stats stats.Stats) echo.MiddlewareFunc {
@@ -40,9 +39,21 @@ func wrapContextMiddleware(manager exchange.Manager, stats stats.Stats) echo.Mid
 func customContextWrapper(h func(c *customContext) error) echo.HandlerFunc {
 	return func(e echo.Context) error {
 		if ctx, ok := e.(*customContext); ok {
-			ctx.stats.IncreaseRequestCount()
 			return h(ctx)
 		}
 		return echo.NewHTTPError(http.StatusInternalServerError, "failed to wrap customContext")
+	}
+}
+
+func requestStatMiddleware(h func(c *customContext) error) func(c *customContext) error {
+	return func(c *customContext) error {
+		c.stats.IncreaseRequestCount()
+		err := h(c)
+		if err != nil {
+			c.stats.IncreaseFailureRequestCount()
+			return err
+		}
+		c.stats.IncreaseSuccessRequestCount()
+		return nil
 	}
 }

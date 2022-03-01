@@ -12,26 +12,26 @@ import (
 type customHandler = func(ctx *customContext) error
 type customMiddleware = func(handler customHandler) customHandler
 
+/// 요청에서 사용되는 값들을 필드로 가지는 custom context
 type customContext struct {
 	echo.Context
-	manager exchange.Manager
-	stats   stats.Stats
+	stats stats.Stats
 }
 
 func Route(e *echo.Group) {
 	serverStats := stats.NewStats()
 	exchangeManager := exchange.NewManager()
-	e.Use(wrapContextMiddleware(exchangeManager, serverStats))
-	e.POST("/buy", customWrapper(buy, requestStatMiddleware()))
-	e.POST("/sell", customWrapper(sell, requestStatMiddleware()))
+	h := NewHandler(exchangeManager)
+	e.Use(wrapContextMiddleware(serverStats))
+	e.POST("/buy", customWrapper(h.buy, requestStatMiddleware()))
+	e.POST("/sell", customWrapper(h.sell, requestStatMiddleware()))
 }
 
-func wrapContextMiddleware(manager exchange.Manager, stats stats.Stats) echo.MiddlewareFunc {
+func wrapContextMiddleware(stats stats.Stats) echo.MiddlewareFunc {
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			cc := &customContext{
 				Context: c,
-				manager: manager,
 				stats:   stats,
 			}
 			return next(cc)

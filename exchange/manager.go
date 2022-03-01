@@ -12,7 +12,9 @@ type manager struct {
 }
 
 func NewManager() Manager {
-	return &manager{}
+	return &manager{
+		value: new(uint64),
+	}
 }
 
 func (m *manager) Buy(value uint64) error {

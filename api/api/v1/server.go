@@ -12,7 +12,7 @@ import (
 type customHandler = func(ctx *customContext) error
 type customMiddleware = func(handler customHandler) customHandler
 
-/// 요청에서 사용되는 값들을 필드로 가지는 custom context
+// Request 후 실행에 사용되는 상태 관련 값들을 필드로 가지는 custom context
 type customContext struct {
 	echo.Context
 	stats stats.Stats
@@ -34,6 +34,7 @@ func wrapContextMiddleware(stats stats.Stats) echo.MiddlewareFunc {
 				Context: c,
 				stats:   stats,
 			}
+			cc.SetLogger(cc.Echo().Logger)
 			return next(cc)
 		}
 	}

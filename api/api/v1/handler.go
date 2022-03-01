@@ -15,7 +15,7 @@ type Handler interface {
 	sell(c *customContext) error
 }
 
-/// Handler에서는 서버에서의 동작과 관련된 값들을 관리
+// Handler는 서버의 동작과 관련된 값들을 관리
 type handler struct {
 	manager exchange.Manager
 }

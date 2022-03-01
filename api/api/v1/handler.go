@@ -9,21 +9,21 @@ import (
 )
 
 func buy(c *customContext) error {
-	req := new(dto.SellRequest)
-	if err := c.Bind(req); err != nil {
+	req := dto.BuyRequest{}
+	if err := c.Bind(&req); err != nil {
 		c.Logger().Error(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "invalid request")
 	}
-	if err := c.manager.Sell(req.Value); err != nil {
+	if err := c.manager.Buy(req.Value); err != nil {
 		c.Logger().Error(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
-	return c.String(http.StatusOK, "buy success")
+	return c.JSON(http.StatusOK, dto.BuyResponse{Value: req.Value})
 }
 
 func sell(c *customContext) error {
-	req := new(dto.SellRequest)
-	if err := c.Bind(req); err != nil {
+	req := dto.SellRequest{}
+	if err := c.Bind(&req); err != nil {
 		c.Logger().Error(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "invalid request")
 	}
@@ -31,5 +31,5 @@ func sell(c *customContext) error {
 		c.Logger().Error(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
-	return c.String(http.StatusOK, "sell success")
+	return c.JSON(http.StatusOK, dto.SellResponse{Value: req.Value})
 }

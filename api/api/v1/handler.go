@@ -3,11 +3,10 @@ package v1
 import (
 	"net/http"
 
-	"sideEcho/exchange"
-
 	"github.com/labstack/echo/v4"
 
 	"sideEcho/dto"
+	"sideEcho/exchange"
 )
 
 type Handler interface {

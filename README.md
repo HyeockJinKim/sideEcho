@@ -1,6 +1,15 @@
 # SideEcho
 > echo를 사용한 기본 서버 아키텍처를 작성합니다.
 
+## Get Started
+```bash
+// swagger 업데이트
+$ swag i
+
+// 서버 실행
+$ go run . -c config/config.toml
+```
+
 ## 기본 구조
 
 ```
@@ -28,7 +37,7 @@ client - server - handler - controller or manager
 - [ ] Database 관련 모듈 작성
   - [ ] DB 추상화 모듈 작성
   - [ ] ORM 모듈 작성
-- [ ] swagger 작성
+- [X] swagger 작성
 - [ ] Dockerfile 작성
 - [ ] test 추가
   - [ ] `*_test.go` 코드 추가

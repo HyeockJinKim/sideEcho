@@ -1,0 +1,96 @@
+definitions:
+  dto.BuyRequest:
+    properties:
+      value:
+        type: integer
+    type: object
+  dto.BuyResponse:
+    properties:
+      value:
+        type: integer
+    type: object
+  dto.ErrorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  dto.SellRequest:
+    properties:
+      value:
+        type: integer
+    type: object
+  dto.SellResponse:
+    properties:
+      value:
+        type: integer
+    type: object
+info:
+  contact: {}
+  description: This is a sample Exchange server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: SideEcho API
+  version: "0.1"
+paths:
+  /api/v1/buy:
+    post:
+      consumes:
+      - application/json
+      description: Buy value
+      parameters:
+      - description: balance for buy
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.BuyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.BuyResponse'
+        "400":
+          description: invalid request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Buy
+      tags:
+      - Exchange
+  /api/v1/sell:
+    post:
+      consumes:
+      - application/json
+      description: Sell value
+      parameters:
+      - description: balance for sell
+        in: body
+        name: req
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SellRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SellResponse'
+        "400":
+          description: invalid request
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+        "500":
+          description: Internal error
+          schema:
+            $ref: '#/definitions/dto.ErrorResponse'
+      summary: Sell
+      tags:
+      - Exchange
+swagger: "2.0"

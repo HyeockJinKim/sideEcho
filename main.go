@@ -8,8 +8,14 @@ import (
 
 	"sideEcho/api"
 	"sideEcho/config"
+	_ "sideEcho/docs"
 )
 
+// @title         SideEcho API
+// @version       0.1
+// @description   This is a sample Exchange server.
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {
 	flags := config.ReadFlags()
 	cfg, err := config.ReadConfigFile(flags)

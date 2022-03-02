@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"time"
 
+	echoSwagger "github.com/swaggo/echo-swagger"
+
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 
@@ -24,6 +26,7 @@ func externalAPI(cfg *config.Config) CleanupFunc {
 	e.Use(middleware.TimeoutWithConfig(middleware.TimeoutConfig{
 		Timeout: time.Duration(cfg.Config.Api.TimeoutSec) * time.Second,
 	}))
+	e.GET("/swagger/*", echoSwagger.WrapHandler)
 
 	apiRouter := e.Group("/api")
 	api.Route(apiRouter)

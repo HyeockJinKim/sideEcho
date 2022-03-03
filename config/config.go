@@ -10,10 +10,11 @@ import (
 
 const (
 	flagConfig = "config"
-)
 
-const (
 	defaultConfigPath = "configs/config.toml"
+
+	authUsername = "AUTH_USERNAME"
+	authPassword = "AUTH_PASSWORD"
 )
 
 type Config struct {
@@ -47,8 +48,8 @@ func ReadFlags() *Flags {
 	flagSet := pflag.NewFlagSet("sideEcho", pflag.ExitOnError)
 	flagSet.StringVarP(&flags.ConfigPath, flagConfig, "c", defaultConfigPath, "configuration file path")
 
-	flags.Auth.Username = []byte(os.Getenv("AUTH_USERNAME"))
-	flags.Auth.Password = []byte(os.Getenv("AUTH_PASSWORD"))
+	flags.Auth.Username = []byte(os.Getenv(authUsername))
+	flags.Auth.Password = []byte(os.Getenv(authPassword))
 	return flags
 }
 

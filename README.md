@@ -34,12 +34,11 @@ client - server - handler - controller or manager
     
 ## Todo
 
+- [X] swagger 작성
+- [X] test 추가
+  - [X] `*_test.go` 코드 추가
+  - [ ] CI 적용
 - [ ] Database 관련 모듈 작성
   - [ ] DB 추상화 모듈 작성
   - [ ] ORM 모듈 작성
-- [X] swagger 작성
 - [ ] Dockerfile 작성
-- [ ] test 추가
-  - [ ] `*_test.go` 코드 추가
-  - [ ] 통합 테스트 추가
-  - [ ] CI 적용

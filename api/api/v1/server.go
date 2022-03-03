@@ -20,8 +20,8 @@ type customContext struct {
 
 func Route(e *echo.Group) {
 	serverStats := stats.NewStats()
-	exchangeManager := exchange.NewManager()
-	h := NewHandler(exchangeManager)
+	exchangeController := exchange.NewController()
+	h := NewHandler(exchangeController)
 	e.Use(wrapContextMiddleware(serverStats))
 	e.POST("/buy", customWrapper(h.buy, requestStatMiddleware()))
 	e.POST("/sell", customWrapper(h.sell, requestStatMiddleware()))

@@ -3,11 +3,13 @@ package v1
 import (
 	"net/http"
 
-	echo "github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4"
 
 	"sideEcho/dto"
 	"sideEcho/exchange"
 )
+
+//go:generate mockgen -package $GOPACKAGE -destination $PWD/api/api/v1/mock_$GOFILE sideEcho/api/api/v1 Handler
 
 type Handler interface {
 	buy(c *customContext) error
@@ -16,12 +18,12 @@ type Handler interface {
 
 // Handler는 서버의 동작과 관련된 값들을 관리
 type handler struct {
-	manager exchange.Manager
+	controller exchange.Controller
 }
 
-func NewHandler(manager exchange.Manager) Handler {
+func NewHandler(controller exchange.Controller) Handler {
 	return &handler{
-		manager: manager,
+		controller: controller,
 	}
 }
 
@@ -41,7 +43,7 @@ func (h *handler) buy(c *customContext) error {
 		c.Logger().Error(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "invalid request")
 	}
-	if err := h.manager.Buy(req.Value); err != nil {
+	if err := h.controller.Buy(req.Value); err != nil {
 		c.Logger().Error(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}
@@ -64,7 +66,7 @@ func (h *handler) sell(c *customContext) error {
 		c.Logger().Error(err)
 		return echo.NewHTTPError(http.StatusBadRequest, "invalid request")
 	}
-	if err := h.manager.Sell(req.Value); err != nil {
+	if err := h.controller.Sell(req.Value); err != nil {
 		c.Logger().Error(err)
 		return echo.NewHTTPError(http.StatusInternalServerError, err)
 	}

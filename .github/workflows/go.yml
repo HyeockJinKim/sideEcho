@@ -1,0 +1,31 @@
+name: Go
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+
+  build:
+    runs-on: [ubuntu-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.17
+
+    - name: Install gomock 1.6.0
+      run: go install github.com/golang/mock/mockgen@v1.6.0
+
+    - name: Generate Mock code
+      run: go generate -v ./...
+
+    - name: Build
+      run: go build -v ./...
+
+    - name: Test
+      run: go test -v ./...

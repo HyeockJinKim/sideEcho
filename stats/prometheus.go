@@ -7,7 +7,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promauto"
 )
 
-//go:generate mockgen -package $GOPACKAGE -destination $PWD/stats/mock_$GOFILE sideEcho/stats Stats
+//go:generate mockgen -package $GOPACKAGE -destination $PWD/mock_$GOFILE sideEcho/stats Stats
 
 var once sync.Once
 

@@ -2,7 +2,7 @@ package exchange
 
 import "sync/atomic"
 
-//go:generate mockgen -package $GOPACKAGE -destination $PWD/exchange/mock_$GOFILE sideEcho/exchange Controller
+//go:generate mockgen -package $GOPACKAGE -destination $PWD/mock_$GOFILE sideEcho/exchange Controller
 
 type Controller interface {
 	Buy(value uint64) error

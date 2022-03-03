@@ -9,7 +9,7 @@ import (
 	"sideEcho/exchange"
 )
 
-//go:generate mockgen -package $GOPACKAGE -destination $PWD/api/api/v1/mock_$GOFILE sideEcho/api/api/v1 Handler
+//go:generate mockgen -package $GOPACKAGE -destination $PWD/mock_$GOFILE sideEcho/api/api/v1 Handler
 
 type Handler interface {
 	buy(c *customContext) error

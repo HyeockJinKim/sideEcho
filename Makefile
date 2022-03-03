@@ -1,4 +1,7 @@
 
+build:
+	@go build -race -v ./...
+
 test:
 	@go test -race ./...
 

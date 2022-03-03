@@ -1,4 +1,4 @@
-name: Go
+name: sideEcho-workflow
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    runs-on: [ubuntu-latest, macos-latest]
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
 
@@ -25,7 +25,7 @@ jobs:
       run: go generate -v ./...
 
     - name: Build
-      run: go build -v ./...
+      run: make build
 
     - name: Test
-      run: go test -v ./...
+      run: make test
